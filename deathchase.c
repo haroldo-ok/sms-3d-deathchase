@@ -5,6 +5,7 @@
 #include "SMSlib/src/SMSlib.h"
 #include "types.h"
 #include "three_d.h"
+#include "three_d_tables.h"
 #include "gfx.h"
 
 UBYTE map[PF_HEIGHT][PF_WIDTH];
