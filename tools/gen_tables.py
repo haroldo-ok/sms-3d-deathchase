@@ -5,6 +5,7 @@ PF_HEIGHT = 24
 
 MAX_DEPTH = 63
 TRUNK_WIDTH = 80
+TRUNK_HEIGHT = 128
 MIN_TRUNK_WIDTH = 8
 
 MAX_X = PF_WIDTH
@@ -17,7 +18,8 @@ for depth in range(0, MAX_DEPTH + 1):
     scale = 1.0 / (depth * max_divider / MAX_DEPTH + 1)
 
     trunk_table.append({
-        'width': int(round(TRUNK_WIDTH * scale))
+        'width': int(round(TRUNK_WIDTH * scale)),
+        'height': int(round(TRUNK_WIDTH * scale))
     })
 
     x_for_depth = []
@@ -44,7 +46,7 @@ with open(script_dir + '/../three_d_tables.h', 'w') as f:
     f.write('#define PF_HEIGHT %d\n' % PF_HEIGHT)
 
     f.write('\nconst trunk_data trunk_table[] = %s\n' %
-            to_record_array_const(trunk_table, ['width']))
+            to_record_array_const(trunk_table, ['width', 'height']))
 
     x_depth_string = ',\n\t'.join(['{%s}' % ','.join(map(str, l)) for l in x_table])
     f.write('\nconst UBYTE trunk_depth_x[][%d] = {\n\t%s\n};\n' % (MAX_X, x_depth_string))

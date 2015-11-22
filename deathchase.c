@@ -34,15 +34,27 @@ void draw_tree(int x, int y) {
   UBYTE i, j, tx;
   trunk_data *trunk_data = trunk_table + y;
   UBYTE trunk_tile_w = (trunk_data-> width >> 3) | 1;
+  UBYTE trunk_tile_h = (trunk_data-> height >> 3) | 1;
   UBYTE projected_x = trunk_depth_x[y][x];
 
   UBYTE start_x = (PF_WIDTH >> 1) + projected_x - (trunk_tile_w >> 1);
   UBYTE end_x = start_x + trunk_tile_w;
+
+  BYTE start_y = (PF_HEIGHT >> 1) - (trunk_tile_h >> 1);
+  BYTE end_y = start_y + trunk_tile_h;
+
   if (end_x > PF_WIDTH) {
     end_x = PF_WIDTH;
   }
 
-  for (i = 0; i != PF_HEIGHT; i++) {
+  if (start_y < 0) {
+    end_y = 0;
+  }
+  if (end_y > PF_HEIGHT) {
+    end_y = PF_HEIGHT;
+  }
+
+  for (i = start_y; i != end_y; i++) {
     for (tx = start_x; tx != end_x; tx++) {
       map[i][tx] = 'H';
     }

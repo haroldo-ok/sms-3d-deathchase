@@ -3,6 +3,7 @@
 
 typedef struct _trunk_data {
   UBYTE width;
+  UBYTE height;
 } trunk_data;
 
 
