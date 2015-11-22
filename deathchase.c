@@ -34,11 +34,16 @@ void draw_tree(int x, int y) {
   UBYTE i, j, tx;
   trunk_data *trunk_data = trunk_table + y;
   UBYTE trunk_tile_w = (trunk_data-> width >> 3) | 1;
-  UBYTE x_ofs = (PF_WIDTH >> 1) - (trunk_tile_w >> 1);
+  UBYTE projected_x = trunk_depth_x[y][x];
+
+  UBYTE start_x = (PF_WIDTH >> 1) + projected_x - (trunk_tile_w >> 1);
+  UBYTE end_x = start_x + trunk_tile_w;
+  if (end_x > PF_WIDTH) {
+    end_x = PF_WIDTH;
+  }
 
   for (i = 0; i != PF_HEIGHT; i++) {
-    for (j = 0, tx = x_ofs; j != trunk_tile_w; j++, tx++) {
-      //map[i]tx] = 'H';
+    for (tx = start_x; tx != end_x; tx++) {
       map[i][tx] = 'H';
     }
   }
@@ -79,7 +84,7 @@ void main(void) {
   i = 0;
   while (true) {
     clear_map();
-    draw_tree(0, i & 0x3F);
+    draw_tree(11, i & 0x3F);
 
     SMS_waitForVBlank();
     draw_map();
