@@ -1,2 +1,3 @@
 # 3D Death Chase for Sega Master System
-A port/clone of 3D Deathchase
+A clone of 3D Deathchase
+*Work in progress*
