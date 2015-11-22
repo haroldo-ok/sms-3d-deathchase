@@ -31,11 +31,15 @@ void draw_map() {
 }
 
 void draw_tree(int x, int y) {
-  UBYTE i, j;
+  UBYTE i, j, tx;
+  trunk_data *trunk_data = trunk_table + y;
+  UBYTE trunk_tile_w = (trunk_data-> width >> 3) | 1;
+  UBYTE x_ofs = (PF_WIDTH >> 1) - (trunk_tile_w >> 1);
 
   for (i = 0; i != PF_HEIGHT; i++) {
-    for (j = 10; j != 20; j++) {
-      map[i][j] = 'H';
+    for (j = 0, tx = x_ofs; j != trunk_tile_w; j++, tx++) {
+      //map[i]tx] = 'H';
+      map[i][tx] = 'H';
     }
   }
 }
@@ -72,12 +76,15 @@ void main(void) {
   SMS_setSpritePaletteColor(01,0x3f);     // white
   SMS_displayOn();
 
+  i = 0;
   while (true) {
     clear_map();
-    draw_tree(0, 0);
+    draw_tree(0, i & 0x3F);
 
     SMS_waitForVBlank();
     draw_map();
+
+    i -= 2;
   }
 }
 
