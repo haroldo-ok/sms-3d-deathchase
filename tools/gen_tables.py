@@ -5,8 +5,16 @@ PF_HEIGHT = 24
 
 MAX_DEPTH = 63
 TRUNK_WIDTH = 80
+MIN_TRUNK_WIDTH = 2
 
-trunk_table = [{'width': 32}, {'width': 20}]
+trunk_table = []
+max_divider = TRUNK_WIDTH / MIN_TRUNK_WIDTH
+for depth in range(0, MAX_DEPTH + 1):
+    # TRUNK_WIDTH * n / 64 = 2 => n = 2 * 64 / TRUNK_WIDTH
+    scale = 1.0 / (depth * max_divider / MAX_DEPTH + 1)
+    trunk_table.append({
+        'width': int(round(TRUNK_WIDTH * scale))
+    })
 
 def to_record_array_const(records, keys):
     internal = ',\n\t'.join([to_record_const(r, keys) for r in records])
