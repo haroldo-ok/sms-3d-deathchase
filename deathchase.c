@@ -35,7 +35,7 @@ void draw_tree(int x, int y) {
   trunk_data *trunk_data = trunk_table + y;
   UBYTE trunk_tile_w = trunk_data->width;
   UBYTE trunk_tile_h = trunk_data->height;
-  UBYTE projected_x = trunk_depth_x[y][x];
+  BYTE projected_x = x >= 0 ? trunk_depth_x[y][x] : -trunk_depth_x[y][-x];
 
   BYTE start_x = (PF_WIDTH >> 1) + projected_x - (trunk_tile_w >> 1);
   BYTE end_x = start_x + trunk_tile_w;
@@ -96,7 +96,7 @@ void main(void) {
   i = 0;
   while (true) {
     clear_map();
-    draw_tree(11, i & 0x3F);
+    draw_tree(-11, i & 0x3F);
 
     SMS_waitForVBlank();
     draw_map();
