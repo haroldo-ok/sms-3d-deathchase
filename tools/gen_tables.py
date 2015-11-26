@@ -4,15 +4,15 @@ PF_WIDTH = 32
 PF_HEIGHT = 24
 
 MAX_DEPTH = 63
-TRUNK_WIDTH = 80
-TRUNK_HEIGHT = TRUNK_WIDTH * 2
+TRUNK_WIDTH = 32
+TRUNK_HEIGHT = 240
 MIN_TRUNK_WIDTH = 8
 
 MAX_X = PF_WIDTH
 
 trunk_table = []
 x_table = []
-max_divider = TRUNK_WIDTH / MIN_TRUNK_WIDTH
+max_divider = 1.0 * TRUNK_WIDTH / MIN_TRUNK_WIDTH
 for depth in range(0, MAX_DEPTH + 1):
     # TRUNK_WIDTH * n / 64 = 2 => n = 2 * 64 / TRUNK_WIDTH
     scale = 1.0 / (depth * max_divider / MAX_DEPTH + 1)
