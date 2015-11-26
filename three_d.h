@@ -6,5 +6,10 @@ typedef struct _trunk_data {
   UBYTE height;
 } trunk_data;
 
+typedef struct _point {
+  fixed x;
+  fixed y;
+} point;
+
 
 #endif /* _THRE_D_H */

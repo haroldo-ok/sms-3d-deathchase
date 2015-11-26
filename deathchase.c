@@ -8,6 +8,8 @@
 #include "three_d_tables.h"
 #include "gfx.h"
 
+#define MAX_TREES 8
+
 UBYTE map[PF_HEIGHT][PF_WIDTH];
 
 void clear_map() {
@@ -81,7 +83,8 @@ void load_font (void) {
 }
 
 void main(void) {
-  unsigned char i;
+  unsigned char i, j;
+  point points[MAX_TREES], *ppoint;
 
   load_font();
 
@@ -93,15 +96,27 @@ void main(void) {
   SMS_setSpritePaletteColor(01,0x3f);     // white
   SMS_displayOn();
 
-  i = 0;
+  for (i = 0, ppoint = points; i != MAX_TREES; i++, ppoint++) {
+    ppoint->x.b.h = rand() & 0x1F;
+    ppoint->y.b.h = rand() & 0x1F;
+  }
+
   while (true) {
     clear_map();
-    draw_tree(-11, i & 0x3F);
+    for (i = 0, ppoint = points; i != MAX_TREES; i++, ppoint++) {
+      draw_tree((BYTE) ppoint->x.b.h - 16, ppoint->y.b.h);
+    }
 
     SMS_waitForVBlank();
     draw_map();
 
-    i -= 2;
+    for (i = 0, ppoint = points; i != MAX_TREES; i++, ppoint++) {
+      ppoint->y.b.h--;
+      if (ppoint->y.b.h > 31) {
+        ppoint->x.b.h = rand() & 0x1F;
+        ppoint->y.b.h = (rand() & 3) + 28;
+      }
+    }
   }
 }
 
