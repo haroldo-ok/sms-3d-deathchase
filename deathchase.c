@@ -106,6 +106,6 @@ void main(void) {
 }
 
 SMS_EMBED_SEGA_ROM_HEADER(9999,0); // code 9999 hopefully free, here this means 'homebrew'
-SMS_EMBED_SDSC_HEADER(0,1, 2015,11,22, "Haroldo-OK\\2015", "3D Deathchase",
+SMS_EMBED_SDSC_HEADER(0,2, 2015,11,26, "Haroldo-OK\\2015", "3D Deathchase https://github.com/haroldo-ok/sms-3d-deathchase",
   "A clone of 3D Deathchase for the SMS.\n"
   "Built using devkitSMS & SMSlib - https://github.com/sverx/devkitSMS");
