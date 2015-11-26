@@ -45,6 +45,10 @@ void draw_tree(int x, int y) {
   BYTE start_y = (PF_HEIGHT >> 1) - (trunk_tile_h >> 1);
   BYTE end_y = start_y + trunk_tile_h;
 
+  if (projected_x < -15 || projected_x > 15) {
+    return;
+  }
+
   if (end_x > PF_WIDTH) {
     end_x = PF_WIDTH;
   }
@@ -97,14 +101,14 @@ void main(void) {
   SMS_displayOn();
 
   for (i = 0, ppoint = points; i != MAX_TREES; i++, ppoint++) {
-    ppoint->x.b.h = rand() & 0x1F;
+    ppoint->x.b.h = rand() & 0x3F;
     ppoint->y.b.h = rand() & 0x1F;
   }
 
   while (true) {
     clear_map();
     for (i = 0, ppoint = points; i != MAX_TREES; i++, ppoint++) {
-      draw_tree((BYTE) ppoint->x.b.h - 16, ppoint->y.b.h);
+      draw_tree((BYTE) ppoint->x.b.h - 32, ppoint->y.b.h);
     }
 
     SMS_waitForVBlank();
@@ -113,7 +117,7 @@ void main(void) {
     for (i = 0, ppoint = points; i != MAX_TREES; i++, ppoint++) {
       ppoint->y.b.h--;
       if (ppoint->y.b.h > 31) {
-        ppoint->x.b.h = rand() & 0x1F;
+        ppoint->x.b.h = rand() & 0x3F;
         ppoint->y.b.h = (rand() & 3) + 28;
       }
     }
